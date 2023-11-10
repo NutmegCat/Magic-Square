@@ -12,12 +12,12 @@ public class MagicSquare {
             }
         }
 
-        if (isMagic(square)) {
+        if (isMagic(square) && !hasRepeatingDigits(square)) {
             System.out.println("\nIt is a magic square");
             int sum = getMagicSquareSum(square);
             System.out.println("The sum is " + sum + "\n");
         } else {
-            System.out.println("\nIt is not a magic square\n");
+            System.out.println("\nIt is not a magic square, or has repeating digits\n");
         }
     }
 
@@ -67,6 +67,35 @@ public class MagicSquare {
 
         // if all checks pass, it is a magic square
         return true;
+    }
+
+
+    public static boolean hasRepeatingDigits(int[][] square) {
+        int n = square.length;
+
+        // check repeating digits for rows
+        for (int i = 0; i < n; i++) {
+            boolean[] seen = new boolean[n * n + 1];
+            for (int j = 0; j < n; j++) {
+                int num = square[i][j];
+                if (seen[num]) {
+                    return true;
+                }
+                seen[num] = true;
+            }
+        }
+
+        for (int j = 0; j < n; j++) {
+            boolean[] seen = new boolean[n * n + 1];
+            for (int i = 0; i < n; i++) {
+                int num = square[i][j];
+                if (seen[num]) {
+                    return true;
+                }
+                seen[num] = true;
+            }
+        }
+        return false;
     }
 
     public static int getMagicSquareSum(int[][] square) {
